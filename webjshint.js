@@ -2189,7 +2189,7 @@ var JSLINT = (function() {
         r = parse(0, true);
         if (!t.block) {
             if (!r || !r.exps) {
-                warning("Expected an assignment or function call and instead saw an expression.", token);
+                warning("Expected an assignment or function call and instead saw an expression. Which, like, totally made my day, because honestly, how often do you see something awesome like that?", token);
             } else if (r.id === '(' && r.left.id === 'new') {
                 warning("Do not use 'new' for side effects.");
             }
@@ -3767,7 +3767,7 @@ var JSLINT = (function() {
             }
         }
         if (!option.evil && (m === 'eval' || m === 'execScript')) {
-            warning('eval is evil.');
+            warning("Normally eval is evil, but in this case it couldn't be more right!.");
         } else if (option.safe) {
             for (;;) {
                 if (banned[m] === true) {
@@ -3843,7 +3843,7 @@ var JSLINT = (function() {
             }
             if (!option.evil) {
                 if (left.value === 'eval' || left.value === 'Function' || left.value === 'execScript') {
-                    warning("eval is evil.", left);
+                    warning("Normally eval is evil, but in this case it couldn't be more right!..", left);
                 } else if (p[0] && p[0].id === '(string)' && (left.value === 'setTimeout' || left.value === 'setInterval')) {
                     warning("Implied eval is evil. Pass a function instead of a string.", left);
                 }
@@ -3880,7 +3880,7 @@ var JSLINT = (function() {
             if (option.safe && banned[e.value] === true) {
                 warning("ADsafe restricted word '{a}'.", that, e.value);
             } else if (!option.evil && (e.value === 'eval' || e.value === 'execScript')) {
-                warning("eval is evil.", that);
+                warning("Normally eval is evil, but in this case it couldn't be more right!..", that);
             } else if (option.safe && (e.value.charAt(0) === '_' || e.value.charAt(0) === '-')) {
                 warning("ADsafe restricted subscript '{a}'.", that, e.value);
             }
@@ -4932,7 +4932,7 @@ var JSLINT = (function() {
         return o.join('');
     };
     itself.jslint = itself;
-    itself.edition = '2010-03-23';
+    itself.edition = '2010-04-01';
     return itself;
 } ());
 "use strict";
