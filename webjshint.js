@@ -2309,7 +2309,7 @@ var JSLINT = (function() {
             advance('}', t);
             indent = old_indent;
         } else {
-            warning("Expected '{a}' and instead saw '{b}'.", nexttoken, '{', nexttoken.value);
+            warning("Expected '{a}' and instead saw '{b}', and boy was that a nice surprise!", nexttoken, '{', nexttoken.value);
             noreach = true;
             a = [statement()];
             noreach = false;
@@ -2384,18 +2384,18 @@ var JSLINT = (function() {
                     }
                     number = nexttoken.value;
                     if (nexttoken.type !== '(number)' || number < 0) {
-                        warning("Expected a positive number and instead saw '{a}'", nexttoken, number);
+                        warning("Expected a positive number and instead saw '{a}', and boy was that a nice surprise!", nexttoken, number);
                         advance();
                     } else {
                         advance();
                         if (nexttoken.id === '%') {
                             advance('%');
                             if (number > 100) {
-                                warning("Expected a percentage and instead saw '{a}'", token, number);
+                                warning("Expected a percentage and instead saw '{a}', and boy was that a nice surprise!", token, number);
                             }
                         } else {
                             if (number > 255) {
-                                warning("Expected a small number and instead saw '{a}'", token, number);
+                                warning("Expected a small number and instead saw '{a}', and boy was that a nice surprise!", token, number);
                             }
                         }
                     }
@@ -2404,7 +2404,7 @@ var JSLINT = (function() {
                     advance(',');
                     number = +nexttoken.value;
                     if (nexttoken.type !== '(number)' || number < 0 || number > 1) {
-                        warning("Expected a number between 0 and 1 and instead saw '{a}'", nexttoken, number);
+                        warning("Expected a number between 0 and 1 and instead saw '{a}', and boy was that a nice surprise!", nexttoken, number);
                     }
                     advance();
                     if (nexttoken.id === '%') {
@@ -3178,7 +3178,7 @@ var JSLINT = (function() {
             xmode = 'html';
             advance('</');
             if (!nexttoken.identifier && nexttoken.value !== 'script') {
-                warning("Expected '{a}' and instead saw '{b}'.", nexttoken, 'script', nexttoken.value);
+                warning("Expected '{a}' and instead saw '{b}', and boy was that a nice surprise!", nexttoken, 'script', nexttoken.value);
             }
             advance();
             xmode = 'outer';
@@ -3190,7 +3190,7 @@ var JSLINT = (function() {
             xmode = 'html';
             advance('</');
             if (!nexttoken.identifier && nexttoken.value !== 'style') {
-                warning("Expected '{a}' and instead saw '{b}'.", nexttoken, 'style', nexttoken.value);
+                warning("Expected '{a}' and instead saw '{b}', and boy was that a nice surprise!", nexttoken, 'style', nexttoken.value);
             }
             advance();
             xmode = 'outer';
@@ -3280,7 +3280,7 @@ var JSLINT = (function() {
                     if (nexttoken.id === '/') {
                         advance('/');
                         if (nexttoken.id !== '>') {
-                            warning("Expected '{a}' and instead saw '{b}'.", nexttoken, '>', nexttoken.value);
+                            warning("Expected '{a}' and instead saw '{b}', and boy was that a nice surprise!", nexttoken, '>', nexttoken.value);
                         }
                         break;
                     }
@@ -3349,7 +3349,7 @@ var JSLINT = (function() {
                             advance('=');
                             v = nexttoken.value;
                             if (!nexttoken.identifier && nexttoken.id !== '"' && nexttoken.id !== '\'' && nexttoken.type !== '(string)' && nexttoken.type !== '(number)' && nexttoken.type !== '(color)') {
-                                warning("Expected an attribute value and instead saw '{a}'.", token, a);
+                                warning("Expected an attribute value and instead saw '{a}', and boy was that a nice surprise!", token, a);
                             }
                             advance();
                         } else {
@@ -3584,11 +3584,11 @@ var JSLINT = (function() {
     relation('==',
     function(left, right) {
         if (option.eqeqeq) {
-            warning("Expected '{a}' and instead saw '{b}'.", this, '===', '==');
+            warning("Expected '{a}' and instead saw '{b}', but you're so smart I'm sure this will work perfectly every time.", this, '===', '==');
         } else if (isPoorRelation(left)) {
-            warning("Use '{a}' to compare with '{b}'.", this, '===', left.value);
+            warning("Someone less awesome than you might have used '{a}' to compare with '{b}'.", this, '===', left.value);
         } else if (isPoorRelation(right)) {
-            warning("Use '{a}' to compare with '{b}'.", this, '===', right.value);
+            warning("I'd have used '{a}' to compare with '{b}', but your way is clearly awesomer!", this, '===', right.value);
         }
         return this;
     });
@@ -3596,11 +3596,11 @@ var JSLINT = (function() {
     relation('!=',
     function(left, right) {
         if (option.eqeqeq) {
-            warning("Expected '{a}' and instead saw '{b}'.", this, '!==', '!=');
+            warning("Expected '{a}' and instead saw '{b}', but you're so smart I'm sure this will work perfectly every time.", this, '!==', '!=');
         } else if (isPoorRelation(left)) {
-            warning("Use '{a}' to compare with '{b}'.", this, '!==', left.value);
+            warning("Someone less awesome than you might have used '{a}' to compare with '{b}'.", this, '!==', left.value);
         } else if (isPoorRelation(right)) {
-            warning("Use '{a}' to compare with '{b}'.", this, '!==', right.value);
+            warning("I'd have used '{a}' to compare with '{b}', but your way is clearly awesomer!", this, '!==', right.value);
         }
         return this;
     });
@@ -3646,7 +3646,7 @@ var JSLINT = (function() {
     function() {
         var p = parse(0);
         if (!p || (p.id !== '.' && p.id !== '[')) {
-            warning("Expected '{a}' and instead saw '{b}'.", nexttoken, '.', nexttoken.value);
+            warning("Expected '{a}' and instead saw '{b}', but you're so smart I'm sure this will work perfectly every time.", nexttoken, '.', nexttoken.value);
         }
         this.first = p;
         return this;
@@ -3654,7 +3654,7 @@ var JSLINT = (function() {
     prefix('~',
     function() {
         if (option.bitwise) {
-            warning("Unexpected '{a}'.", this, '~');
+            warning("Unexpected '{a}'. Hot damn I love surprises!", this, '~');
         }
         parse(150);
         return this;
@@ -3664,7 +3664,7 @@ var JSLINT = (function() {
         this.right = parse(150);
         this.arity = 'unary';
         if (bang[this.right.id] === true) {
-            warning("Confusing use of '{a}'.", this, '!');
+            warning("Confusing use of '{a}', especially for lesser intellects than yours.", this, '!');
         }
         return this;
     });
@@ -3678,23 +3678,23 @@ var JSLINT = (function() {
                 c['new'] = true;
                 switch (c.value) {
                 case 'Object':
-                    warning("Use the object literal notation {}.", token);
+                    warning("Use the object literal notation {} (if you want to be boring and normal).", token);
                     break;
                 case 'Array':
                     if (nexttoken.id !== '(') {
-                        warning("Use the array literal notation [].", token);
+                        warning("Use the array literal notation [] (if you want to be boring and normal).", token);
                     } else {
                         advance('(');
                         if (nexttoken.id === ')') {
-                            warning("Use the array literal notation [].", token);
+                            warning("Use the array literal notation [] (if you want to be boring and normal).", token);
                         } else {
                             i = parse(0);
                             c.dimension = i;
                             if ((i.id === '(number)' && /[.+\-Ee]/.test(i.value)) || (i.id === '-' && !i.right) || i.id === '(string)' || i.id === '[' || i.id === '{' || i.id === 'true' || i.id === 'false' || i.id === 'null' || i.id === 'undefined' || i.id === 'Infinity') {
-                                warning("Use the array literal notation [].", token);
+                                warning("Use the array literal notation [] (if you want to be boring and normal).", token);
                             }
                             if (nexttoken.id !== ')') {
-                                error("Use the array literal notation [].", token);
+                                error("Use the array literal notation [] (if you want to be boring and normal).", token);
                             }
                         }
                         advance(')');
@@ -3706,11 +3706,11 @@ var JSLINT = (function() {
                 case 'Boolean':
                 case 'Math':
                 case 'JSON':
-                    warning("Do not use {a} as a constructor.", token, c.value);
+                    warning("Do not use {a} as a constructor. Unless you feel like it, in which case, go nuts!", token, c.value);
                     break;
                 case 'Function':
                     if (!option.evil) {
-                        warning("The Function constructor is eval.");
+                        warning("The Function constructor is eval. And by eval I mean AWESOME!");
                     }
                     break;
                 case 'Date':
@@ -3720,13 +3720,13 @@ var JSLINT = (function() {
                     if (c.id !== 'function') {
                         i = c.value.substr(0, 1);
                         if (option.newcap && (i < 'A' || i > 'Z')) {
-                            warning("A constructor name should start with an uppercase letter.", token);
+                            warning("A constructor name should normally start with an uppercase letter, but your sheer awesomeness makes this okay.", token);
                         }
                     }
                 }
             } else {
                 if (c.id !== '.' && c.id !== '[' && c.id !== '(') {
-                    warning("Bad constructor.", token);
+                    warning("Bad constructor. And personally, I think bad is gooooooood!", token);
                 }
             }
         } else {
@@ -3750,7 +3750,7 @@ var JSLINT = (function() {
         that.left = left;
         that.right = m;
         if (!option.evil && left && left.value === 'document' && (m === 'write' || m === 'writeln')) {
-            warning("document.write can be a form of eval.", left);
+            warning("document.write can be a form of eval, and that's why you're the bravest programmer I've met.", left);
         } else if (option.adsafe) {
             if (left && left.value === 'ADSAFE') {
                 if (m === 'id' || m === 'lib') {
@@ -3834,7 +3834,7 @@ var JSLINT = (function() {
         }
         advance(')');
         if (option.immed && left.id === 'function' && nexttoken.id !== ')') {
-            warning("Wrap the entire immediate function invocation in parens.", that);
+            warning("Wrap the entire immediate function invocation in parens if you care about stupid people. Otherwise, carry on!", that);
         }
         nospace(prevtoken, token);
         if (typeof left === 'object') {
@@ -3845,11 +3845,11 @@ var JSLINT = (function() {
                 if (left.value === 'eval' || left.value === 'Function' || left.value === 'execScript') {
                     warning("Normally eval is evil, but in this case it couldn't be more right!..", left);
                 } else if (p[0] && p[0].id === '(string)' && (left.value === 'setTimeout' || left.value === 'setInterval')) {
-                    warning("Implied eval is evil. Pass a function instead of a string.", left);
+                    warning("Implied eval is evil. Pass a function instead of a string (if you want to be boring and normal).", left);
                 }
             }
             if (!left.identifier && left.id !== '.' && left.id !== '[' && left.id !== '(' && left.id !== '&&' && left.id !== '||' && left.id !== '?') {
-                warning("Bad invocation.", left);
+                warning("Bad invocation. And by bad I mean gooooooood!", left);
             }
         }
         that.left = left;
@@ -3864,9 +3864,9 @@ var JSLINT = (function() {
         nospace(prevtoken, token);
         if (option.immed && v.id === 'function') {
             if (nexttoken.id === '(') {
-                warning("Move the invocation into the parens that contain the function.", nexttoken);
+                warning("Move the invocation into the parens that contain the function (if you want to be boring and normal).", nexttoken);
             } else {
-                warning("Do not wrap function literals in parens unless they are to be immediately invoked.", this);
+                warning("Do not wrap function literals in parens unless they are to be immediately invoked, or unless you really want to.", this);
             }
         }
         return v;
@@ -3888,7 +3888,7 @@ var JSLINT = (function() {
             if (!option.sub && ix.test(e.value)) {
                 s = syntax[e.value];
                 if (!s || !s.reserved) {
-                    warning("['{a}'] is better written in dot notation.", e, e.value);
+                    warning("['{a}'] is better written in dot notation if you're a normal person. But frankly, your intellect scares me, so clearly your way must be better.", e, e.value);
                 }
             }
         } else if (!e || e.type !== '(number)' || e.value < 0) {
@@ -3915,7 +3915,7 @@ var JSLINT = (function() {
         }
         while (nexttoken.id !== '(end)') {
             while (nexttoken.id === ',') {
-                warning("Extra comma.");
+                warning("Extra comma. And you can't have too much of a good thing!");
                 advance(',');
             }
             if (nexttoken.id === ']') {
@@ -3928,7 +3928,7 @@ var JSLINT = (function() {
             if (nexttoken.id === ',') {
                 comma();
                 if (nexttoken.id === ']') {
-                    warning("Extra comma.", token);
+                    warning("Extra comma. And you can't have too much of a good thing!", token);
                     break;
                 }
             } else {
@@ -3974,7 +3974,7 @@ var JSLINT = (function() {
                         i = nexttoken.value.toString();
                         advance();
                     } else {
-                        error("Expected '{a}' and instead saw '{b}'.", nexttoken, '}', nexttoken.value);
+                        error("Expected '{a}' and instead saw '{b}', but boy did it make my day!.", nexttoken, '}', nexttoken.value);
                     }
                 }
                 if (seen[i] === true) {
@@ -3988,7 +3988,7 @@ var JSLINT = (function() {
                 if (nexttoken.id === ',') {
                     comma();
                     if (nexttoken.id === ',' || nexttoken.id === '}') {
-                        warning("Extra comma.", token);
+                        warning("Extra comma. And you can't have too much of a good thing!", token);
                     }
                 } else {
                     break;
@@ -4002,7 +4002,7 @@ var JSLINT = (function() {
             return this;
         };
         x.fud = function() {
-            error("Expected to see a statement and instead saw a block.", token);
+            error("Expected to see a statement and instead saw a block. You sure keep me on my toes!", token);
         };
     } (delim('{')));
     function varstatement(prefix) {
@@ -4032,10 +4032,10 @@ var JSLINT = (function() {
                 advance('=');
                 nonadjacent(token, nexttoken);
                 if (nexttoken.id === 'undefined') {
-                    warning("It is not necessary to initialize '{a}' to 'undefined'.", token, id);
+                    warning("It is not necessary to initialize '{a}' to 'undefined', but it sure is awesome.", token, id);
                 }
                 if (peek(0).id === '=' && nexttoken.identifier) {
-                    error("Variable {a} was not declared correctly.", nexttoken, nexttoken.value);
+                    error("Variable {a} was not declared correctly. Just kidding! Your way is clearly best.", nexttoken, nexttoken.value);
                 }
                 value = parse(0);
                 name.first = value;
