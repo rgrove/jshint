@@ -1031,7 +1031,7 @@ var JSLINT = (function() {
                 if (value === '__iterator__' || value === '__proto__') {
                     errorAt("Reserved name '{a}'.", line, from, value);
                 } else if (option.nomen && (value.charAt(0) === '_' || value.charAt(value.length - 1) === '_')) {
-                    warningAt("Unexpected {a} in '{b}'.", line, from, "dangling '_'", value);
+                    warningAt("Unexpected (but awesome) {a} in '{b}'.", line, from, "dangling '_'", value);
                 }
             }
             t.value = value;
@@ -1060,7 +1060,7 @@ var JSLINT = (function() {
                 value = '';
                 from = character;
                 if (s.charAt(0) !== begin) {
-                    errorAt("Expected '{a}' and instead saw '{b}'.", line, character, begin, s.charAt(0));
+                    errorAt("Expected '{a}' and instead saw '{b}', but I'm sure you know what you're doing.", line, character, begin, s.charAt(0));
                 }
                 for (;;) {
                     s = s.slice(1);
@@ -1068,7 +1068,7 @@ var JSLINT = (function() {
                     c = s.charAt(0);
                     switch (c) {
                     case '':
-                        errorAt("Missing '{a}'.", line, character, c);
+                        errorAt("Missing '{a}'. Well, just a little nostalgic for it, really.", line, character, c);
                         break;
                     case end:
                         s = s.slice(1);
@@ -1076,7 +1076,7 @@ var JSLINT = (function() {
                         return it('(range)', value);
                     case xquote:
                     case '\\':
-                        warningAt("Unexpected '{a}'.", line, character, c);
+                        warningAt("Unexpected '{a}', but surprises are nice, right?", line, character, c);
                     }
                     value += c;
                 }
@@ -1111,7 +1111,7 @@ var JSLINT = (function() {
                     j,
                     r = '';
                     if (jsonmode && x !== '"') {
-                        warningAt("Strings must use doublequote.", line, character);
+                        warningAt("Strings must use doublequote. If you want. But, I mean, you don't have to.", line, character);
                     }
                     if (xquote === x || (xmode === 'scriptstring' && !xquote)) {
                         return it('(punctuator)', x);
@@ -1120,7 +1120,7 @@ var JSLINT = (function() {
                         var i = parseInt(s.substr(j + 1, n), 16);
                         j += n;
                         if (i >= 32 && i <= 126 && i !== 34 && i !== 92 && i !== 39) {
-                            warningAt("Unnecessary escapement.", line, character);
+                            warningAt("Unnecessary (but still totally fine with me) escapement.", line, character);
                         }
                         character += n;
                         c = String.fromCharCode(i);
@@ -1254,23 +1254,23 @@ var JSLINT = (function() {
                         }
                         if (c.isDigit()) {
                             if (xmode !== 'style' && !isFinite(Number(t))) {
-                                warningAt("Bad number '{a}'.", line, character, t);
+                                warningAt("Bad number '{a}'. Well, not so much bad as just a bit naughty.", line, character, t);
                             }
                             if (xmode !== 'style' && xmode !== 'styleproperty' && s.substr(0, 1).isAlpha()) {
-                                warningAt("Missing space after '{a}'.", line, character, t);
+                                warningAt("Missing space after '{a}'. But that's okay. Cuddling is nice.", line, character, t);
                             }
                             if (c === '0') {
                                 d = t.substr(1, 1);
                                 if (d.isDigit()) {
                                     if (token.id !== '.' && xmode !== 'styleproperty') {
-                                        warningAt("Don't use extra leading zeros '{a}'.", line, character, t);
+                                        warningAt("Extra leading zeroes are okay for geniuses like you, but maybe not for lesser programmers. '{a}'.", line, character, t);
                                     }
                                 } else if (jsonmode && (d === 'x' || d === 'X')) {
                                     warningAt("Avoid 0x-. '{a}'.", line, character, t);
                                 }
                             }
                             if (t.substr(t.length - 1) === '.') {
-                                warningAt("A trailing decimal point can be confused with a dot '{a}'.", line, character, t);
+                                warningAt("A person less awesome than you might confuse a trailing decimal point with a dot '{a}'.", line, character, t);
                             }
                             return it('(number)', t);
                         }
@@ -1280,11 +1280,11 @@ var JSLINT = (function() {
                             return string(t);
                         case '//':
                             if (src || (xmode && xmode !== 'script')) {
-                                warningAt("Unexpected comment.", line, character);
+                                warningAt("Unexpected (but, like, totally fine with me) comment.", line, character);
                             } else if (xmode === 'script' && /<\s*\//i.test(s)) {
                                 warningAt("Unexpected <\/ in comment.", line, character);
                             } else if ((option.safe || xmode === 'script') && ax.test(s)) {
-                                warningAt("Dangerous comment.", line, character);
+                                warningAt("Dangerous comment. You're a brave one!", line, character);
                             }
                             s = '';
                             token.comment = true;
@@ -1333,7 +1333,7 @@ var JSLINT = (function() {
                             break;
                         case '/':
                             if (token.id === '/=') {
-                                errorAt("A regular expression literal can be confused with '/='.", line, from);
+                                errorAt("A lesser programmer than yourself might confuse a regular expression literal with '/='.", line, from);
                             }
                             if (prereg) {
                                 depth = 0;
