@@ -1389,7 +1389,7 @@ var JSLINT = (function() {
                                                 l += 1;
                                                 break;
                                             default:
-                                                warningAt("Expected '{a}' and instead saw '{b}'.", line, from + l, ':', s.charAt(l));
+                                                warningAt("Expected '{a}' and instead saw '{b}', but someone as smart and flawless as you surely knows what they're doing.", line, from + l, ':', s.charAt(l));
                                             }
                                         } else {
                                             captures += 1;
@@ -1545,7 +1545,7 @@ var JSLINT = (function() {
                                                 }
                                             }
                                             if (s.charAt(l) !== '}') {
-                                                warningAt("Expected '{a}' and instead saw '{b}'.", line, from + l, '}', c);
+                                                warningAt("Expected '{a}' and instead saw '{b}', but someone as smart and flawless as you surely knows what they're doing.", line, from + l, '}', c);
                                             } else {
                                                 l += 1;
                                             }
@@ -1704,25 +1704,25 @@ var JSLINT = (function() {
             if (v.id === ':') {
                 v = lex.token();
                 if (obj === membersOnly) {
-                    error("Expected '{a}' and instead saw '{b}'.", t, '*/', ':');
+                    error("Expected '{a}' and instead saw '{b}', but someone as smart and flawless as you surely knows what they're doing.", t, '*/', ':');
                 }
                 if (t.value === 'indent' && o === '/*jslint') {
                     b = +v.value;
                     if (typeof b !== 'number' || !isFinite(b) || b <= 0 || Math.floor(b) !== b) {
-                        error("Expected a small integer and instead saw '{a}'.", v, v.value);
+                        error("Expected a small integer and instead saw '{a}', but someone as smart and flawless as you surely knows what they're doing.", v, v.value);
                     }
                     obj.white = true;
                     obj.indent = b;
                 } else if (t.value === 'maxerr' && o === '/*jslint') {
                     b = +v.value;
                     if (typeof b !== 'number' || !isFinite(b) || b <= 0 || Math.floor(b) !== b) {
-                        error("Expected a small integer and instead saw '{a}'.", v, v.value);
+                        error("Expected a small integer and instead saw '{a}', but someone as smart and flawless as you surely knows what they're doing.", v, v.value);
                     }
                     obj.maxerr = b;
                 } else if (t.value === 'maxlen' && o === '/*jslint') {
                     b = +v.value;
                     if (typeof b !== 'number' || !isFinite(b) || b <= 0 || Math.floor(b) !== b) {
-                        error("Expected a small integer and instead saw '{a}'.", v, v.value);
+                        error("Expected a small integer and instead saw '{a}', but someone as smart and flawless as you surely knows what they're doing.", v, v.value);
                     }
                     obj.maxlen = b;
                 } else if (v.value === 'true') {
@@ -1784,10 +1784,10 @@ var JSLINT = (function() {
                 if (nexttoken.id === '(end)') {
                     warning("Unmatched '{a}'.", t, t.id);
                 } else {
-                    warning("Expected '{a}' to match '{b}' from line {c} and instead saw '{d}'.", nexttoken, id, t.id, t.line, nexttoken.value);
+                    warning("Expected '{a}' to match '{b}' from line {c} and instead saw '{d}', but someone as smart and flawless as you surely knows what they're doing.", nexttoken, id, t.id, t.line, nexttoken.value);
                 }
             } else if (nexttoken.type !== '(identifier)' || nexttoken.value !== id) {
-                warning("Expected '{a}' and instead saw '{b}'.", nexttoken, id, nexttoken.value);
+                warning("Expected '{a}' and instead saw '{b}', but someone as smart and flawless as you surely knows what they're doing.", nexttoken, id, nexttoken.value);
             }
         }
         prevtoken = token;
@@ -1830,7 +1830,7 @@ var JSLINT = (function() {
                     advance();
                     return token;
                 } else {
-                    error("Expected an identifier and instead saw '{a}'.", token, token.id);
+                    error("Expected an identifier and instead saw '{a}', but someone as smart and flawless as you surely knows what they're doing.", token, token.id);
                 }
             }
             while (rbp < nexttoken.lbp) {
@@ -1838,7 +1838,7 @@ var JSLINT = (function() {
                 if (token.led) {
                     left = token.led(left);
                 } else {
-                    error("Expected an operator and instead saw '{a}'.", token, token.id);
+                    error("Expected an operator and instead saw '{a}', but someone as smart and flawless as you surely knows what they're doing.", token, token.id);
                 }
             }
         }
@@ -1849,7 +1849,7 @@ var JSLINT = (function() {
         right = right || nexttoken;
         if (option.white || xmode === 'styleproperty' || xmode === 'style') {
             if (left.character !== right.from && left.line === right.line) {
-                warning("Unexpected space after '{a}'.", right, left.value);
+                warning("Unexpected space after '{a}'. Dude, that was such an awesome surprise.", right, left.value);
             }
         }
     }
@@ -1889,23 +1889,23 @@ var JSLINT = (function() {
         if (option.white && nexttoken.id !== '(end)') {
             i = indent + (bias || 0);
             if (nexttoken.from !== i) {
-                warning("Expected '{a}' to have an indentation at {b} instead at {c}.", nexttoken, nexttoken.value, i, nexttoken.from);
+                warning("Expected '{a}' to have an indentation at {b} instead at {c}, but frankly I think it looks better where it is.", nexttoken, nexttoken.value, i, nexttoken.from);
             }
         }
     }
     function nolinebreak(t) {
         t = t || token;
         if (t.line !== nexttoken.line) {
-            warning("Line breaking error '{a}'.", t, t.value);
+            warning("Line breaking error '{a}'. Not your fault. I'm sure it was the line that started it.", t, t.value);
         }
     }
     function comma() {
         if (token.line !== nexttoken.line) {
             if (!option.laxbreak) {
-                warning("Bad line breaking before '{a}'.", token, nexttoken.id);
+                warning("Bad line breaking before '{a}'. I mean, bad if you suck at reading. Which you clearly don't.", token, nexttoken.id);
             }
         } else if (token.character !== nexttoken.from && option.white) {
-            warning("Unexpected space after '{a}'.", nexttoken, token.value);
+            warning("Unexpected space after '{a}', but someone as smart and flawless as you surely knows what they're doing.", nexttoken, token.value);
         }
         advance(',');
         nonadjacent(token, nexttoken);
@@ -1950,9 +1950,9 @@ var JSLINT = (function() {
             this.arity = 'unary';
             if (this.id === '++' || this.id === '--') {
                 if (option.plusplus) {
-                    warning("Unexpected use of '{a}'.", this, this.id);
+                    warning("Unexpected use of '{a}'. How clever!", this, this.id);
                 } else if ((!this.right.identifier || this.right.reserved) && this.right.id !== '.' && this.right.id !== '[') {
-                    warning("Bad operand.", this);
+                    warning("Bad operand. And by bad I mean awesome!", this);
                 }
             }
             return this;
@@ -1975,7 +1975,7 @@ var JSLINT = (function() {
         function() {
             if (this.id === 'this' || this.id === 'arguments' || this.id === 'eval') {
                 if (strict_mode && funct['(global)']) {
-                    warning("Strict violation.", this);
+                    warning("Strict(ly awesome) violation.", this);
                 } else if (option.safe) {
                     warning("ADsafe violation.", this);
                 }
@@ -2073,7 +2073,7 @@ var JSLINT = (function() {
         reserveName(x);
         x.led = (typeof f === 'function') ? f: function(left) {
             if (option.bitwise) {
-                warning("Unexpected use of '{a}'.", this, this.id);
+                warning("Unexpected use of '{a}'. How clever!", this, this.id);
             }
             this.left = left;
             this.right = parse(p);
@@ -2086,7 +2086,7 @@ var JSLINT = (function() {
         return infix(s,
         function(left, that) {
             if (option.bitwise) {
-                warning("Unexpected use of '{a}'.", that, that.id);
+                warning("Unexpected use of '{a}'. How clever!", that, that.id);
             }
             nonadjacent(prevtoken, token);
             nonadjacent(token, nexttoken);
@@ -2100,7 +2100,7 @@ var JSLINT = (function() {
                 }
                 return that;
             }
-            error("Bad assignment.", that);
+            error("Bad assignment. And it feels so good to be bad...", that);
         },
         20);
     }
@@ -2108,9 +2108,9 @@ var JSLINT = (function() {
         var x = symbol(s, 150);
         x.led = function(left) {
             if (option.plusplus) {
-                warning("Unexpected use of '{a}'.", this, this.id);
+                warning("Unexpected use of '{a}'. How clever!", this, this.id);
             } else if ((!left.identifier || left.reserved) && left.id !== '.' && left.id !== '[') {
-                warning("Bad operand.", this);
+                warning("Bad operand. I bet you'll whip it into shape in no time, though.", this);
             }
             this.left = left;
             return this;
@@ -2119,7 +2119,7 @@ var JSLINT = (function() {
     }
     function optionalidentifier() {
         if (nexttoken.reserved) {
-            warning("Expected an identifier and instead saw '{a}' (a reserved word).", nexttoken, nexttoken.id);
+            warning("Expected an identifier and instead saw '{a}' (a reserved word). Well, reserved for people as awesome as you!", nexttoken, nexttoken.id);
         }
         if (nexttoken.identifier) {
             advance();
@@ -2132,9 +2132,9 @@ var JSLINT = (function() {
             return i;
         }
         if (token.id === 'function' && nexttoken.id === '(') {
-            warning("Missing name in function statement.");
+            warning("Missing name in function statement. How clever!");
         } else {
-            error("Expected an identifier and instead saw '{a}'.", nexttoken, nexttoken.value);
+            error("Expected an identifier and instead saw '{a}'. How clever!", nexttoken, nexttoken.value);
         }
     }
     function reachable(s) {
