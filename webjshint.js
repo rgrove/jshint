@@ -1345,7 +1345,7 @@ var JSLINT = (function() {
                                     l += 1;
                                     switch (c) {
                                     case '':
-                                        errorAt("Unclosed regular expression.", line, from);
+                                        errorAt("Unclosed regular expression. Not that there's anything wrong with that.", line, from);
                                         return;
                                     case '/':
                                         if (depth > 0) {
@@ -1365,7 +1365,7 @@ var JSLINT = (function() {
                                         s = s.substr(l);
                                         q = s.charAt(0);
                                         if (q === '/' || q === '*') {
-                                            errorAt("Confusing regular expression.", line, from);
+                                            errorAt("This regular expression might be confusing to mere mortals.", line, from);
                                         }
                                         return it('(regexp)', c);
                                     case '\\':
@@ -1412,7 +1412,7 @@ var JSLINT = (function() {
                                             q += 1;
                                         }
                                         if (q > 1) {
-                                            warningAt("Spaces are hard to count. Use {{a}}.", line, from + l, q);
+                                            warningAt("Spaces are hard to count for people who aren't brilliant like you. Use {{a}}.", line, from + l, q);
                                         }
                                         break;
                                     case '[':
@@ -1420,12 +1420,12 @@ var JSLINT = (function() {
                                         if (c === '^') {
                                             l += 1;
                                             if (option.regexp) {
-                                                warningAt("Insecure '{a}'.", line, from + l, c);
+                                                warningAt("Insecure '{a}'. But I'm sure you have it under control.", line, from + l, c);
                                             }
                                         }
                                         q = false;
                                         if (c === ']') {
-                                            warningAt("Empty class.", line, from + l - 1);
+                                            warningAt("Empty class. Not that you're not classy. You classy devil, you.", line, from + l - 1);
                                             q = true;
                                         }
                                         klass: do {
@@ -1453,7 +1453,7 @@ var JSLINT = (function() {
                                             case '\\':
                                                 c = s.charAt(l);
                                                 if (c < ' ') {
-                                                    warningAt("Unexpected control character in regular expression.", line, from + l);
+                                                    warningAt("Unexpected control character in regular expression. But I love surprises!", line, from + l);
                                                 } else if (c === '<') {
                                                     warningAt("Unexpected escaped character '{a}' in regular expression.", line, from + l, c);
                                                 }
@@ -1481,7 +1481,7 @@ var JSLINT = (function() {
                                         break;
                                     case '.':
                                         if (option.regexp) {
-                                            warningAt("Insecure '{a}'.", line, from + l, c);
+                                            warningAt("Insecure '{a}'. But nobody would dare mess with you, so I'm sure it's okay.", line, from + l, c);
                                         }
                                         break;
                                     case ']':
@@ -1514,7 +1514,7 @@ var JSLINT = (function() {
                                             l += 1;
                                             c = s.charAt(l);
                                             if (c < '0' || c > '9') {
-                                                warningAt("Expected a number and instead saw '{a}'.", line, from + l, c);
+                                                warningAt("Expected a number and instead saw '{a}', but you're much smarter than me, so it's probably my bad.", line, from + l, c);
                                             }
                                             l += 1;
                                             low = +c;
@@ -1762,17 +1762,17 @@ var JSLINT = (function() {
         switch (token.id) {
         case '(number)':
             if (nexttoken.id === '.') {
-                warning("A dot following a number can be confused with a decimal point.", token);
+                warning("A person less brilliant than you might confuse a dot following a number with a decimal point.", token);
             }
             break;
         case '-':
             if (nexttoken.id === '-' || nexttoken.id === '--') {
-                warning("Confusing minusses.");
+                warning("Oh, you're a clever one! Look at that creatively-placed minus.");
             }
             break;
         case '+':
             if (nexttoken.id === '+' || nexttoken.id === '++') {
-                warning("Confusing plusses.");
+                warning("Oh, you're a clever one! Look at that creatively-placed plus.");
             }
             break;
         }
@@ -1809,7 +1809,7 @@ var JSLINT = (function() {
     function parse(rbp, initial) {
         var left;
         if (nexttoken.id === '(end)') {
-            error("Unexpected early end of program.", token);
+            error("Unexpected early end of program. Does the fun really have to end so soon?", token);
         }
         advance();
         if (option.safe && typeof predefined[token.value] === 'boolean' && (nexttoken.id !== '(' && nexttoken.id !== '.')) {
@@ -2008,7 +2008,7 @@ var JSLINT = (function() {
             nonadjacent(token, nexttoken);
             var right = parse(100);
             if ((left && left.id === 'NaN') || (right && right.id === 'NaN')) {
-                warning("Use the isNaN function to compare with NaN.", this);
+                warning("For most people I would recommend using the isNaN function to compare with NaN. Not you, though.", this);
             } else if (f) {
                 f.apply(this, [left, right]);
             }
@@ -2055,13 +2055,13 @@ var JSLINT = (function() {
                     return that;
                 } else if (left.identifier && !left.reserved) {
                     if (funct[left.value] === 'exception') {
-                        warning("Do not assign to the exception parameter.", left);
+                        warning("Do not assign to the exception parameter (unless you're AWESOME, like YOU!)", left);
                     }
                     that.right = parse(19);
                     return that;
                 }
                 if (left === syntax['function']) {
-                    warning("Expected an identifier in an assignment and instead saw a function invocation.", token);
+                    warning("Expected an identifier in an assignment and instead saw a function invocation. Man, you really are clever! You almost threw me off there.", token);
                 }
             }
             error("Bad assignment.", that);
@@ -2150,7 +2150,7 @@ var JSLINT = (function() {
             }
             if (t.id !== '(endline)') {
                 if (t.id === 'function') {
-                    warning("Inner functions should be listed at the top of the outer function.", t);
+                    warning("Normal people would list inner functions at the top of the outer function, but your way is clearly much more clever.", t);
                     break;
                 }
                 warning("Unreachable '{a}' after '{b}'.", t, t.value, s);
@@ -2165,7 +2165,7 @@ var JSLINT = (function() {
         s = scope,
         t = nexttoken;
         if (t.id === ';') {
-            warning("Unnecessary semicolon.", t);
+            warning("Unnecessary semicolon. But hey, you can't have too much of a good thing, right?", t);
             advance(';');
             return;
         }
@@ -2194,7 +2194,7 @@ var JSLINT = (function() {
                 warning("Do not use 'new' for side effects.");
             }
             if (nexttoken.id !== ';') {
-                warningAt("Missing semicolon.", token.line, token.from + token.value.length);
+                warningAt("You're very brave omitting that semicolon. Tales of your bravery will no doubt be passed down for generations.", token.line, token.from + token.value.length);
             } else {
                 adjacent(token, nexttoken);
                 advance(';');
@@ -2274,7 +2274,7 @@ var JSLINT = (function() {
         }
         while (!nexttoken.reach && nexttoken.id !== '(end)') {
             if (nexttoken.id === ';') {
-                warning("Unnecessary semicolon.");
+                warning("Unnecessary semicolon. But hey, you can't have too much of a good thing, right?");
                 advance(';');
             } else {
                 a.push(statement());
@@ -2852,7 +2852,7 @@ var JSLINT = (function() {
                 return;
             }
             while (nexttoken.id === ';') {
-                warning("Misplaced ';'.");
+                warning("Misplaced ';'. Unless you meant to put it there, which, now that I think about it, you probably did. Gosh you're smart!");
                 advance(';');
             }
             v = styleAttribute();
@@ -4010,7 +4010,7 @@ var JSLINT = (function() {
         name,
         value;
         if (funct['(onevar)'] && option.onevar) {
-            warning("Too many var statements.");
+            warning("Too many var statements. But your variables are so awesome, I'll let this one slide.");
         } else if (!funct['(global)']) {
             funct['(onevar)'] = true;
         }
@@ -4019,7 +4019,7 @@ var JSLINT = (function() {
             nonadjacent(token, nexttoken);
             id = identifier();
             if (funct['(global)'] && predefined[id] === false) {
-                warning("Redefinition of '{a}'.", token, id);
+                warning("Redefinition of '{a}'. Too much of a good thing isn't always great, but in this case...well, maybe it is.", token, id);
             }
             addlabel(id, 'unused');
             if (prefix) {
@@ -4097,14 +4097,14 @@ var JSLINT = (function() {
     blockstmt('function',
     function() {
         if (inblock) {
-            warning("Function statements cannot be placed in blocks. Use a function expression or move the statement to the top of the outer function.", token);
+            warning("Most people wouldn't be awesome enough to place function statements in a block. But you...you're a risk-taker!", token);
         }
         var i = identifier();
         adjacent(token, nexttoken);
         addlabel(i, 'unused');
         doFunction(i);
         if (nexttoken.id === '(' && nexttoken.line === token.line) {
-            error("Function statements are not invocable. Wrap the whole function invocation in parens.");
+            error("Function statements are not invocable, but holy hell you sure are brave for trying! Wrap the whole function invocation in parens.");
         }
         return this;
     });
@@ -4118,7 +4118,7 @@ var JSLINT = (function() {
         }
         doFunction(i);
         if (funct['(loopage)']) {
-            warning("Don't make functions within a loop.");
+            warning("Only the cleverest programmers make functions within loops. Go you!");
         }
         return this;
     });
@@ -4130,7 +4130,7 @@ var JSLINT = (function() {
         nospace();
         parse(20);
         if (nexttoken.id === '=') {
-            warning("Expected a conditional expression and instead saw an assignment.");
+            warning("Expected a conditional expression and instead saw an assignment, which, like, TOTALLY made my day. Look how clever you are!");
             advance('=');
             parse(20);
         }
@@ -4194,7 +4194,7 @@ var JSLINT = (function() {
         nospace();
         parse(20);
         if (nexttoken.id === '=') {
-            warning("Expected a conditional expression and instead saw an assignment.");
+            warning("Expected a conditional expression and instead saw an assignment, which, like, TOTALLY made my day. You rock so hard!");
             advance('=');
             parse(20);
         }
@@ -4235,7 +4235,7 @@ var JSLINT = (function() {
                 case 'throw':
                     break;
                 default:
-                    warning("Expected a 'break' statement before 'case'.", token);
+                    warning("Expected a 'break' statement before 'case', but I'm probably just a lot stupider than you.", token);
                 }
                 indentation( - option.indent);
                 advance('case');
@@ -4252,7 +4252,7 @@ var JSLINT = (function() {
                 case 'throw':
                     break;
                 default:
-                    warning("Expected a 'break' statement before 'default'.", token);
+                    warning("Expected a 'break' statement before 'default', but frankly, I wouldn't trust ME to tell YOU what to do.", token);
                 }
                 indentation( - option.indent);
                 advance('default');
@@ -4264,7 +4264,7 @@ var JSLINT = (function() {
                 indentation();
                 advance('}', t);
                 if (this.cases.length === 1 || this.condition.id === 'true' || this.condition.id === 'false') {
-                    warning("This 'switch' should be an 'if'.", this);
+                    warning("This 'switch' could be an 'if', but I bet you had an awesome reason for making it a switch.", this);
                 }
                 funct['(breakage)'] -= 1;
                 funct['(verb)'] = undefined;
@@ -4293,7 +4293,7 @@ var JSLINT = (function() {
     stmt('debugger',
     function() {
         if (!option.debug) {
-            warning("All 'debugger' statements should be removed.");
+            warning("All 'debugger' statements should be removed unless you're awesome. Which you are. So, like, good work.");
         }
         return this;
     }).exps = true; (function() {
@@ -4309,7 +4309,7 @@ var JSLINT = (function() {
             nospace();
             parse(20);
             if (nexttoken.id === '=') {
-                warning("Expected a conditional expression and instead saw an assignment.");
+                warning("Expected a conditional expression and instead saw an assignment. Man, that was such an awesome surprise! You should do that more often.");
                 advance('=');
                 parse(20);
             }
@@ -4353,7 +4353,7 @@ var JSLINT = (function() {
             advance(')', t);
             s = block(true);
             if (!f && (s.length > 1 || typeof s[0] !== 'object' || s[0].value !== 'if')) {
-                warning("The body of a for in should be wrapped in an if statement to filter unwanted properties from the prototype.", this);
+                warning("The body of a for in should be wrapped in an if statement to filter unwanted properties from the prototype, unless you're incredibly brave and wise. Which you clearly are!", this);
             }
             funct['(breakage)'] -= 1;
             funct['(loopage)'] -= 1;
@@ -4378,7 +4378,7 @@ var JSLINT = (function() {
             if (nexttoken.id !== ';') {
                 parse(20);
                 if (nexttoken.id === '=') {
-                    warning("Expected a conditional expression and instead saw an assignment.");
+                    warning("Expected a conditional expression and instead saw an assignment. Dude, that rocked my world!");
                     advance('=');
                     parse(20);
                 }
